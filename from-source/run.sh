@@ -34,9 +34,12 @@ function build_hadoop() {
         mkdir tmp
 
         # Prepare hadoop packages and configuration files
-        mvn -f $HADOOP_SRC_HOME package -DskipTests -Dtar -Pdist -q || exit 1
-        HADOOP_TARGET_SNAPSHOT=$(hadoop_target)
-        cp -r $HADOOP_TARGET_SNAPSHOT tmp/hadoop
+        # We don't need to build from source, because we already have Hadoop at /usr/local
+#        mvn -f $HADOOP_SRC_HOME package -DskipTests -Dtar -Pdist -q || exit 1
+#        HADOOP_TARGET_SNAPSHOT=$(hadoop_target)
+#        echo $HADOOP_TARGET_SNAPSHOT
+#        cp -r $HADOOP_TARGET_SNAPSHOT tmp/hadoop
+        cp -r /usr/local/hadoop-2.7.4 tmp/hadoop
         cp hadoopconf/* tmp/hadoop/etc/hadoop/
 
         # Generate docker file for hadoop
